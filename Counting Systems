@@ -1,0 +1,333 @@
+package miniproject;
+
+import java.util.Scanner;
+
+public class Numbers {
+  static   Scanner scanner = new Scanner(System.in);
+  static int resNum ;
+  static String  hexNum = "";
+  static int optionsNums;
+  static int optionOthersNum;
+    public static void main(String[] args) {
+ boolean noLimit = true;
+while (noLimit) {
+    int option = display();
+    optionsNums = option;
+    resNum = switch (option) {
+        case 1 -> binary();
+        case 2 -> octal();
+        case 3 -> decimal();
+        case 4 -> hexadecimal();
+        default -> 0;
+    };
+
+    int optionOthers = othersNumSystems();
+    optionOthersNum = optionOthers;
+    String resualt = switch (optionOthers) {
+        case 1 -> toBinary();
+        case 2 -> toOctal();
+        case 3 -> toDecimal();
+        case 4 -> toHexadecimal();
+        default -> "Chuchula";
+    };
+
+    if (optionOthers == 4 && option == 3) {
+        System.out.println("Resualt -> " + resNum + " -> " + resualt);
+    }
+   else if(optionOthers == 3 && option == 4 ){
+        System.out.println("Resualt -> " + hexNum + " -> " + resualt);
+    }
+   else if(optionOthers == 4 && option == 4){
+        System.out.println("Resualt -> " + hexNum + " -> " + hexNum);
+
+    }
+
+    else {
+        System.out.println("Resualt -> " + resNum + " -> " + resualt);
+    }
+    System.out.println("Siz yana son kiritishni xohlaysizmi ");
+    System.out.println("1 . HA ");
+    System.out.print("Boshqa lyuboy raqam - Yoq -> ");
+    int number = scanner.nextInt();
+    if(number != 1) noLimit = false;
+
+}
+    }
+
+
+// natija qismi
+    private static String toHexadecimal() {
+        String resNumToString = String.valueOf(resNum);
+        int numbersToDecimal;
+        String res = "";
+
+        switch (optionsNums){
+            case 1 -> {
+                numbersToDecimal =  binaryToDecimal(resNumToString);
+                res = Integer.toHexString(numbersToDecimal);
+            }
+            case 2 -> {
+                numbersToDecimal = octalToDecimal(resNumToString);
+                res = Integer.toHexString(numbersToDecimal);
+            }
+            case 3 -> {
+                res = Integer.toHexString(resNum);
+            }
+            case 4 -> { 
+                numbersToDecimal = hexTodecimial(resNumToString);
+                res = Integer.toHexString(numbersToDecimal);
+            }
+        };
+        return res;
+    }
+
+    private static String toDecimal() {
+        String res = String.valueOf(resNum);
+        int sum = 0 ;
+       switch (optionsNums) {
+           case 1 -> {
+
+            sum =  binaryToDecimal(res);
+           }
+           case 2 -> {
+
+            sum =   octalToDecimal(res);
+           }
+           case 3 ->{
+               sum = Integer.parseInt(res);
+           }
+           case 4 -> {
+               sum = Integer.parseInt(res);
+           }
+       }
+        return String.valueOf(sum) ;
+
+    }
+
+    private static String toOctal() {
+        String resNumToString = String.valueOf(resNum);
+        int numbersToDecimal;
+        String res = "";
+
+        switch (optionsNums){
+            case 1 -> {
+                numbersToDecimal =  binaryToDecimal(resNumToString);
+                res = Integer.toOctalString(numbersToDecimal);
+            }
+            case 2 -> {
+                numbersToDecimal = octalToDecimal(resNumToString);
+                res = Integer.toOctalString(numbersToDecimal);
+            }
+            case 3 -> {
+                res = Integer.toOctalString(resNum);
+            }
+            case 4 -> {
+                numbersToDecimal = hexTodecimial(resNumToString);
+                res = Integer.toOctalString(numbersToDecimal);
+            }
+        };
+        return res;
+    }
+
+    private static String toBinary() {
+        String resNumToString = String.valueOf(resNum);
+        int numbersToDecimal;
+        String res = "";
+
+        switch (optionsNums){
+            case 1 -> {
+                numbersToDecimal = binaryToDecimal(resNumToString);
+                res = Integer.toBinaryString(numbersToDecimal);
+            }
+            case 2 -> {
+                numbersToDecimal = octalToDecimal(resNumToString);
+                res = Integer.toBinaryString(numbersToDecimal);
+            }
+            case 3 -> {
+                res = Integer.toBinaryString(resNum);
+            }
+            case 4 -> {
+                numbersToDecimal = hexTodecimial(resNumToString);
+                res = Integer.toBinaryString(numbersToDecimal);
+            }
+        };
+        return res;
+    }
+
+
+
+
+
+
+/// boshqa sanoq sistemalarini 10-likka otkazish jarayoi
+    private static int binaryToDecimal(String res) {
+        int sum = 0;
+        int pow = res.length()-1;
+        for( int i = 0; i < res.length(); i++ ){
+            sum += Integer.parseInt(String.valueOf(res.charAt(i))) * Math.pow(2,pow);
+            pow--;
+        }
+        return sum;
+    }
+    private static int octalToDecimal(String res) {
+        int sum = 0;
+        int pow = res.length()-1;
+        for( int i = 0; i < res.length(); i++ ){
+            sum += Integer.parseInt(String.valueOf(res.charAt(i))) * Math.pow(8,pow);
+            pow--;
+        }
+        return sum;
+    }
+    private static int hexTodecimial(String hex) {
+        int pow = hex.length()-1;
+        int sum = 0;
+
+        for(int i = 0; i < hex.length(); i++ ){
+          int num = switch (hex.charAt(i)){
+              case '1' -> 1;
+              case '2' -> 2;
+              case '3' -> 3;
+              case '4' -> 4;
+              case '5' -> 5;
+              case '6' -> 6;
+              case '7' -> 7;
+              case '8' -> 8;
+              case '9' -> 9;
+              case 'A' -> 10;
+              case 'B' -> 11;
+              case 'C' -> 12;
+              case 'D' -> 13;
+              case 'E' -> 14;
+              case 'F' -> 15;
+              default -> 0;
+
+          };
+          sum += num * Math.pow(16,pow);
+          pow--;
+
+        }
+        return sum;
+    }
+
+
+    /// 1- qism tanlash va tekshirish qismi
+
+    private static int decimal() {
+        System.out.println("Siz 10-lik sanoq sistemasini tanladingiz ");
+        System.out.print("Sonni kiriting -> ");
+       int num  = scanner.nextInt();
+       resNum = num;
+       return num;
+    }
+
+    private static int octal() {
+        System.out.println("Siz 8-lik sanoq sistemasini tanladingiz ");
+        int number;
+        boolean check ;
+        int temp;
+        do{
+            System.out.print("Sonni kiriting -> ");
+            number = scanner.nextInt();
+            temp = number;
+            check = false;
+
+            while (number > 0){
+                int raqam = number % 10;
+                if(raqam >= 8){
+                    System.out.println("8-lik sanoq sistemasiga mos raqam kiritmadingiz!!!");
+                    check = true;
+                    break;
+                }
+                number/= 10;
+            }
+
+
+        }while (check);
+
+        return temp;
+    }
+
+    private static int binary() {
+        System.out.println("Siz 2-lik sanoq sistemasini tanladingiz ");
+        int number;
+        boolean check ;
+        int temp;
+        do{
+            System.out.print("Sonni kiriting -> ");
+             number = scanner.nextInt();
+             temp = number;
+            check = false;
+
+            while (number > 0){
+                int raqam = number % 10;
+                if(raqam >= 2){
+                    System.out.println("2-lik sanoq sistemasiga mos raqam kiritmadingiz!!!");
+                    check = true;
+                    break;
+                }
+                number/= 10;
+            }
+        }while (check);
+
+
+
+        return temp;
+    }
+    private static int hexadecimal() {
+        System.out.println("Siz 16 - sanoq sistemasini tanladingiz ");
+        String str = "";
+        boolean check;
+        do{
+            System.out.print("Sonni kiriting -> ");
+            str = scanner.next();
+            check = false;
+            for(int i = 0; i < str.length(); i++){
+                if(str.charAt(i) != '0' && str.charAt(i) != '1' && str.charAt(i) != '2' && str.charAt(i) != '3' &&
+                        str.charAt(i) != '4' && str.charAt(i) != '5' && str.charAt(i) != '6' && str.charAt(i) != '7' &&
+                        str.charAt(i) != '8' && str.charAt(i) != '9' && str.charAt(i) != 'A' && str.charAt(i) != 'B' &&
+                        str.charAt(i) != 'C' && str.charAt(i) != 'D' && str.charAt(i) != 'E' && str.charAt(i) != 'F' ){
+                    check = true;
+                    System.out.println("16 - lik sanoq sistemasida mos raqam  kiritmadingiz ");
+                    break;
+                }
+            }
+
+        }while (check);
+        hexNum = str;
+        return  hexTodecimial(str);
+    }
+
+
+    public static int  display(){
+             int option ;
+        do {
+            System.out.println(" Kiritmoqchi bolgan sanoq sistemasini tanlang ");
+            System.out.println("1. 2-lik sanoq sistemasi");
+            System.out.println("2. 8-lik sanoq sistemasi");
+            System.out.println("3. 10-lik sanoq sistemasi");
+            System.out.print("4. 16-lik sanoq sistemasi -> ");
+             option = scanner.nextInt();
+            if(option < 1 || option > 4){
+                System.out.println("Error options");
+            }
+        }while (option < 1 || option> 4);
+
+        return option;
+    }
+    private static int othersNumSystems() {
+        int optionOther ;
+        do {
+            System.out.println(" Qaysi sanoq sistemasiga ozgartirasiz ");
+            System.out.println("1. 2-lik sanoq sistemasi");
+            System.out.println("2. 8-lik sanoq sistemasi");
+            System.out.println("3. 10-lik sanoq sistemasi");
+            System.out.print("4. 16-lik sanoq sistemasi -> ");
+            optionOther = scanner.nextInt();
+            if(optionOther < 1 || optionOther > 4){
+                System.out.println("Error optionOthers");
+            }
+        }while (optionOther < 1 || optionOther> 4);
+
+        return optionOther;
+    }
+}
